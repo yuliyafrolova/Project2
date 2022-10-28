@@ -1,0 +1,89 @@
+list_oper = ["+", "-", "*", "/"]
+memory = 0
+msg_index = 0
+list_letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+msg_10_12 = ["Are you sure? It is only one digit! (y / n)", "Don't be silly! It's just one number! Add to the memory? (y / n)", "Last chance! Do you really want to embarrass yourself? (y / n)"]
+
+def is_one_digit(v):
+    if v in range(-9, 10) and v == int(v):
+        return True
+    else:
+        return False
+        
+
+def check(v1, v2, v3):
+    msg = ""
+    msg_6 = " ... lazy"
+    msg_7 = " ... very lazy"
+    msg_8 = " ... very, very lazy"
+    msg_9 = "You are"
+    if is_one_digit(v1) and is_one_digit(v2):
+        msg = msg + msg_6
+    if (float(v1) == 1 or float(v2) == 1) and v3 == "*":
+        msg = msg + msg_7
+    if (float(v1) == 0 or float(v2) == 0) and v3 in ['+', '-', '*']:
+        msg = msg + msg_8
+    if msg != "":
+        msg = msg_9 + msg
+        print(msg)      
+            
+while True:
+    print("Enter an equation")
+    x, operation, y = input().split()
+    if x == 'M':
+        x = memory
+    if y == 'M':
+        y = memory   
+    if x in list_letters or y in list_letters:
+        print("Do you even know what numbers are? Stay focused!")
+    elif operation not in list_oper:
+        print("Yes ... an interesting math operation. You've slept through all classes, haven't you?")
+    elif operation == "/" and y == '0':
+        print("Yeah... division by zero. Smart move...") 
+    else:
+        check(float(x), float(y), operation)
+        if operation == "+":
+            result = float(x) + float(y)
+            print(result)
+        elif operation  == "-":
+            result = float(x) - float(y)
+            print(result)
+        elif operation == "*":
+            result = float(x) * float(y)
+            print(result)
+        elif operation == "/" and y != 0:
+            result = float(x) / float(y)
+            print(result)
+        else:
+            print("Yeah... division by zero. Smart move...")
+            continue
+    print("Do you want to store the result? (y / n):")
+    answer = input()
+    if answer == "y":
+        if is_one_digit(result) == False:
+            memory = result
+        elif is_one_digit(result) == True:
+            print(msg_10_12[0])
+            answer_3 = input()
+            if answer_3 == "n":
+                pass
+            else: 
+                print(msg_10_12[1])
+                answer_4 = input()
+                if answer_4 == "n":
+                    pass
+                else: 
+                    print(msg_10_12[2])
+                    answer_5 = input()
+                    if answer_5 == "n":
+                        pass
+                    else: 
+                        memory = result
+    elif answer == "n":
+        pass
+    print("Do you want to continue calculations? (y / n):")
+    answer_2 = input()
+    if answer_2 == "y":
+        continue
+    else:
+        break
